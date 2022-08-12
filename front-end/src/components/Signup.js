@@ -16,7 +16,7 @@ export default function Signup() {
 
     async function handleSignup(e) {
         e.preventDefault();
-        const URL = 'http://localhost:5000/sign-up';
+        const URL = 'http://localhost:5000/signup';
 
         try {
             const response = await axios.post(URL, signup);
@@ -59,6 +59,9 @@ export default function Signup() {
         </form>
         <Link to="/login">
             <p>Já tem uma conta? Entre agora!</p>
+        </Link>
+        <Link to="/">
+            <p>Homepage</p>
         </Link>
     </Div>
     )

@@ -5,23 +5,21 @@ import { Link, useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import gamepad from '../assets/gamepad.svg';
 
-export default function Signup() {
+export default function Login() {
     const navigate = useNavigate();
-    const [signup, setSignup] = useState({
-        name: '',
+    const [login, setLogin] = useState({
         email: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     });
 
     async function handleLogin(e) {
         e.preventDefault();
-        const URL = 'http://localhost:5000/sign-up';
+        const URL = 'http://localhost:5000/login';
 
         try {
-            const response = await axios.post(URL, signup);
+            const response = await axios.post(URL, login);
             console.log(response);
-            navigate('/');
+            navigate('/menu');
         } catch (error) {
             console.log(error);
         }
@@ -35,18 +33,21 @@ export default function Signup() {
                 type="text" 
                 placeholder="E-mail"
                 required
-                onChange={(email) => setSignup({...signup, email:email.target.value})} 
+                onChange={(email) => setLogin({...login, email:email.target.value})} 
             />
             <input 
                 type="password" 
                 placeholder="Senha"
                 required
-                onChange={(password) => setSignup({...signup, password:password.target.value})}  
+                onChange={(password) => setLogin({...login, password:password.target.value})}  
             />
             <button type="submit">Entrar</button>
         </form>
         <Link to="/signup">
             <p>Primeira vez? Cadastre-se!</p>
+        </Link>
+        <Link to="/">
+            <p>Homepage</p>
         </Link>
     </Div>
     )

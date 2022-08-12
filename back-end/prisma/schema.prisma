@@ -50,7 +50,7 @@ model Elo {
 
 model UserProfile {
   id          Int @id @default(autoincrement())
-  userId      Int
+  userId      Int 
   gameId      Int
   modeId      Int
   eloId       Int
