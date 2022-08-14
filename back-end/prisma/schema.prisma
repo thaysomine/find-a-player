@@ -52,6 +52,7 @@ model UserProfile {
   id          Int @id @default(autoincrement())
   userId      Int 
   gameId      Int
+  nickname    String
   modeId      Int
   eloId       Int
 

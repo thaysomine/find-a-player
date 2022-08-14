@@ -25,3 +25,17 @@ export async function validateLogin(req: Request, res: Response, next: NextFunct
     if (error) throw new Error(error.message);
     next();
 }
+
+export async function validateProfile(req: Request, res: Response, next: NextFunction) {
+    const data: {userId: number, gameId: number, nickname: string, modeId: number, eloId: number} = req.body;
+    const schema = joi.object({
+        userId: joi.number().required(),
+        gameId: joi.number().required(),
+        nickname: joi.string().required(),
+        modeId: joi.number(),
+        eloId: joi.number()
+    });
+    const { error } = schema.validate(data);   
+    if (error) throw new Error(error.message);
+    next();
+}
