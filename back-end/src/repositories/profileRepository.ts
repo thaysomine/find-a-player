@@ -46,6 +46,7 @@ export async function match(userId: User["id"]) {
 // get all games
 export async function getAllGames() {
     const games = await client.game.findMany();
+    console.log(games);
     return games;
 }
 

@@ -19,5 +19,10 @@ export async function login(data: userRepository.UserLoginData) {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error("Password is incorrect");
     const token = await generateToken(user);
-    return { token };
+    const userData = {
+        userId: user.id,
+        name: user.name,
+        token,
+    }
+    return userData;
 }
