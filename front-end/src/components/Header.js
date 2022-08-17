@@ -7,6 +7,7 @@ import UserContext from '../context/UserContext';
 import ghost from '../assets/ghost.svg';
 import out from '../assets/out.svg'; 
 import background from '../assets/background.jpg';
+import logo from '../assets/logo1.gif';
 
 export default function Header(){
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Header(){
     return (
                 <HeaderContainer>
                     <div className='icons'>
-                        <img src={ghost} alt="logo" />
+                        <img src={logo} alt="logo" />
                         <img src={out} alt="sair" onClick={()=> {navigate('/')}}/>
                     </div>
                     <div className='profile'>

@@ -25,11 +25,14 @@ async function getByUserId(userId: User["id"]) {
         }
     });
     console.log(profile);
-    return profile;
+    if (profile) return profile;
+    return null;
 }
 
 export async function match(userId: User["id"]) {
+    //join with name from users table
     const profile = await getByUserId(userId);
+    if (!profile) return null;
     const similarProfiles = await client.userProfile.findMany({
         where: {
             gameId: profile.gameId,
@@ -38,8 +41,12 @@ export async function match(userId: User["id"]) {
             userId: {
                 not: userId
             }
+        },
+        include: {
+            user: true
         }
     });
+    console.log(similarProfiles);
     return similarProfiles;
 }
 

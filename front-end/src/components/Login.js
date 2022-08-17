@@ -12,6 +12,7 @@ export default function Login() {
         email: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false);
 
     async function handleLogin(e) {
         e.preventDefault();
@@ -47,7 +48,9 @@ export default function Login() {
                     required
                     onChange={(password) => setLogin({...login, password:password.target.value})}  
                 />
-                <button type="submit">Entrar</button>
+                <button type="submit" onClick={()=> setLoading(true)}>
+                    {loading ? 'Carregando...' : 'Entrar'}
+                </button>
             </form>
             <Link to="/signup">
                 <p>Primeira vez? Cadastre-se!</p>

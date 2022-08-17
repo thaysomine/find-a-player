@@ -6,16 +6,23 @@ import UserContext from '../context/UserContext';
 
 import Header from './Header';
 import ghost from '../assets/ghost.svg';
+import pac from '../assets/loading.gif'
 
 export default function Menu() {
     const navigate = useNavigate();
     const [match, setMatch] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { userData } = useContext(UserContext);
+    const config = {
+        headers: { Authorization: `Bearer ${userData.token}` }
+    }
 
     useEffect(() => {
         const URL = 'http://localhost:5000/profile';
-        const promise = axios.get(URL);
+        const promise = axios.get(URL, config);
         promise.then(response => {
-            console.log(response.data);
+            setLoading(false);
+            if(response.data === null) return setMatch(null);
             setMatch(response.data);
         }).catch(error => console.log(error));
     }, []);
@@ -29,19 +36,21 @@ export default function Menu() {
                 <Container>
                     <Description onClick={()=> {navigate('/profile')}}>+Add profile</Description>
                     <Results>
-                        <p>Match Result</p>
-                        {match.map(match => {
-                            console.log(match);
-                            return (
-                                <div className='result' key={match.id}>
-                                    <img src={ghost} alt="ghost" />
-                                    <div className='result-info'>
-                                        <p>{match.userId}</p>
-                                        <p>{match.nickname}</p>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                        { loading ? <div className='loading'><img src={pac} alt='loding'/></div> : 
+                            (match === null) ? <div>Start now creating a profile! =D</div> :
+                                (match.length > 0) ? match.map(match => {
+                                    return (
+                                        <div className='result' key={match.id}>
+                                            <img src={ghost} alt="ghost" />
+                                            <div className='result-info'>
+                                                <p>user: {match.user.name}</p>
+                                                <p>nickname: {match.nickname}</p>
+                                            </div>
+                                        </div>
+                                    )
+                            }) 
+                                : <div>Oh no! D: No matches found!</div>
+                        }   
                     </Results>
                 </Container>
             </div>
@@ -97,6 +106,12 @@ const Results = styled.div`
     box-sizing: border-box;
     padding: 10px;
 
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     p {
         font-size: 20px;
         font-weight: 700;
@@ -113,6 +128,5 @@ const Results = styled.div`
         padding: 5px;
         border: 1px solid gray;
         box-shadow: 0px 0px 10px rgba(100,100,100,0.5);
-
     }
 `;
